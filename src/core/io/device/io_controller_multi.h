@@ -67,8 +67,6 @@ namespace forte {
 
           void addHandle(IODeviceController::HandleDescriptor *paHandleDescriptor) override;
 
-          IOHandle* initHandle(IODeviceController::HandleDescriptor *paHandleDescriptor) override = 0;
-
         private:
 
           /*! @brief Checks if a slave exists at the given index
