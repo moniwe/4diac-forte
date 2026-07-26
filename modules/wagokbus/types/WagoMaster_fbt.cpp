@@ -1,0 +1,146 @@
+/*************************************************************************
+ *** FORTE Library Element
+ ***
+ *** This file was generated using the 4DIAC FORTE Export Filter 3.0.0.202512231800!
+ ***
+ *** Name: WagoMaster
+ *** Description: Service Interface Function Block Type
+ *** Version:
+ ***     3.0: 2025-04-14/Patrick Aigner -  - changed package
+ ***     1.0: 2018-12-05/Jose Cabral -  -
+ *************************************************************************/
+
+#include "WagoMaster_fbt.h"
+#include "../WagoDeviceController.h"
+
+using namespace std::literals;
+using namespace forte::literals;
+
+namespace forte::eclipse4diac::io::wago {
+  namespace {
+    const auto cEventInputNames = std::array{"INIT"_STRID};
+    const auto cEventInputTypeIds = std::array{"EInit"_STRID};
+    const auto cEventOutputNames = std::array{"INITO"_STRID, "IND"_STRID};
+    const auto cEventOutputTypeIds = std::array{"EInit"_STRID, "Event"_STRID};
+    const auto cDataInputNames = std::array{"QI"_STRID, "UpdateInterval"_STRID};
+    const auto cDataOutputNames = std::array{"QO"_STRID, "STATUS"_STRID};
+    const auto cPlugNameIds = std::array{"BusAdapterOut"_STRID};
+    const SFBInterfaceSpec cFBInterfaceSpec = {
+        .mEINames = cEventInputNames,
+        .mEITypeNames = cEventInputTypeIds,
+        .mEONames = cEventOutputNames,
+        .mEOTypeNames = cEventOutputTypeIds,
+        .mDINames = cDataInputNames,
+        .mDONames = cDataOutputNames,
+        .mDIONames = {},
+        .mSocketNames = {},
+        .mPlugNames = cPlugNameIds,
+    };
+  }
+
+  DEFINE_FIRMWARE_FB(FORTE_WagoMaster, "eclipse4diac::io::wago::WagoMaster"_STRID)
+
+  FORTE_WagoMaster::FORTE_WagoMaster(const StringId paInstanceNameId, CFBContainer &paContainer) :
+      IOConfigFBMultiMaster(paContainer, cFBInterfaceSpec, paInstanceNameId),
+      var_QI(0_BOOL),
+      var_UpdateInterval(25_UINT),
+      var_QO(0_BOOL),
+      var_STATUS(u""_WSTRING),
+      var_BusAdapterOut("BusAdapterOut"_STRID, *this, 0),
+      conn_INITO(*this, 0),
+      conn_IND(*this, 1),
+      conn_QI(nullptr),
+      conn_UpdateInterval(nullptr),
+      conn_QO(*this, 0, var_QO),
+      conn_STATUS(*this, 1, var_STATUS) {
+  };
+
+  void FORTE_WagoMaster::setInitialValues() {
+    var_QI = 0_BOOL;
+    var_UpdateInterval = 25_UINT;
+    var_QO = 0_BOOL;
+    var_STATUS = u""_WSTRING;
+  }
+
+  void FORTE_WagoMaster::readInputData(const TEventID paEIID) {
+    switch(paEIID) {
+      case scmEventINITID: {
+        readData(0, var_QI, conn_QI);
+        readData(1, var_UpdateInterval, conn_UpdateInterval);
+        break;
+      }
+      default:
+        break;
+    }
+  }
+
+  void FORTE_WagoMaster::writeOutputData(const TEventID paEIID) {
+	  switch (paEIID) {
+	      case scmEventINITOID: {
+	        writeData(cFBInterfaceSpec.getNumDIs() + 0, var_QO, conn_QO);
+	        writeData(cFBInterfaceSpec.getNumDIs() + 1, var_STATUS, conn_STATUS);
+	        break;
+	      }
+	      case scmEventINDID: {
+	        writeData(cFBInterfaceSpec.getNumDIs() + 1, var_STATUS, conn_STATUS);
+	        writeData(cFBInterfaceSpec.getNumDIs() + 0, var_QO, conn_QO);
+	        break;
+	      }
+	      default: break;
+	    }
+  }
+
+  CIEC_ANY *FORTE_WagoMaster::getDI(const size_t paIndex) {
+    switch(paIndex) {
+      case 0: return &var_QI;
+      case 1: return &var_UpdateInterval;
+    }
+    return nullptr;
+  }
+
+  CIEC_ANY *FORTE_WagoMaster::getDO(const size_t paIndex) {
+    switch(paIndex) {
+      case 0: return &var_QO;
+      case 1: return &var_STATUS;
+    }
+    return nullptr;
+  }
+
+  forte::IPlugPin *FORTE_WagoMaster::getPlugPinUnchecked(const size_t paIndex) {
+	  return (paIndex == 0) ? &var_BusAdapterOut : nullptr;
+  }
+
+  CEventConnection *FORTE_WagoMaster::getEOConUnchecked(const TPortId paIndex) {
+    switch(paIndex) {
+      case 0: return &conn_INITO;
+      case 1: return &conn_IND;
+    }
+    return nullptr;
+  }
+
+  CDataConnection **FORTE_WagoMaster::getDIConUnchecked(const TPortId paIndex) {
+    switch(paIndex) {
+      case 0: return &conn_QI;
+      case 1: return &conn_UpdateInterval;
+    }
+    return nullptr;
+  }
+
+  CDataConnection *FORTE_WagoMaster::getDOConUnchecked(const TPortId paIndex) {
+    switch(paIndex) {
+      case 0: return &conn_QO;
+      case 1: return &conn_STATUS;
+    }
+    return nullptr;
+  }
+
+  void FORTE_WagoMaster::setConfig() {
+    WagoDeviceController::WagoConfig config;
+    config.updateInterval = static_cast<CIEC_UINT::TValueType>(var_UpdateInterval);
+    getDeviceController()->setConfig(&config);
+  }
+
+  ::forte::io::IODeviceController *FORTE_WagoMaster::createDeviceController(CDeviceExecution &paDeviceExecution) {
+    return new WagoDeviceController(paDeviceExecution);
+  }
+}

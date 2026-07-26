@@ -33,20 +33,22 @@ add_library(forte-wagoKbus
             WagoHandle.cpp
             WagoDeviceController.h
             WagoDeviceController.cpp
-            types/WagoMaster.h
-            types/WagoMaster.cpp
-            types/WagoBusAdapter.h
-            types/WagoBusAdapter.cpp
+            types/WagoMaster_fbt.h
+            types/WagoMaster_fbt.cpp
+            types/WagoBusAdapter_adp.h
+            types/WagoBusAdapter_adp.cpp
+            types/WagoRegCom_adp.h
+            types/WagoRegCom_adp.cpp
             types/WagoSlaveBase.h
             types/WagoSlaveBase.cpp
-            types/Wago1506.h
-            types/Wago1506.cpp
-            types/Wago1405_6.h
-            types/Wago1405_6.cpp
-            types/Wago1504_5.h
-            types/Wago1504_5.cpp
-            types/Wago459.h
-            types/Wago459.cpp
+            types/Wago1506_fbt.h
+            types/Wago1506_fbt.cpp
+            types/Wago1405_6_fbt.h
+            types/Wago1405_6_fbt.cpp
+            types/Wago1504_5_fbt.h
+            types/Wago1504_5_fbt.cpp
+            types/Wago459_fbt.h
+            types/Wago459_fbt.cpp
             types/Wago636_fbt.h
             types/Wago636_fbt.cpp
 )
