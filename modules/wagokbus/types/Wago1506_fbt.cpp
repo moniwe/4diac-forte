@@ -24,6 +24,7 @@ namespace {
     const auto cDataOutputNames = std::array{"QO"_STRID, "STATUS"_STRID};
     const auto cSocketNameIds = std::array{"BusAdapterIn"_STRID};
     const auto cPlugNameIds = std::array{"BusAdapterOut"_STRID};
+
     const SFBInterfaceSpec cFBInterfaceSpec = {
         .mEINames = cEventInputNames,
         .mEITypeNames = {},

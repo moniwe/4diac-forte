@@ -12,7 +12,6 @@
 
 #include "WagoBusAdapter_adp.h"
 
-using namespace std::literals;
 using namespace forte::literals;
 
 namespace forte::eclipse4diac::io::wago {
@@ -56,7 +55,7 @@ namespace forte::eclipse4diac::io::wago {
                                const SFBInterfaceSpec &paInterfaceSpec,
                                const StringId paInstanceNameId,
                                TForteUInt8 paParentAdapterlistID) :
-      CAdapter(paContainer, paInterfaceSpec, paInstanceNameId, paParentAdapterlistID),
+      ::forte::io::IOConfigFBMultiAdapter({}, paContainer, paInterfaceSpec, paInstanceNameId, paParentAdapterlistID),
       var_QO(0_BOOL),
       var_QI(0_BOOL),
       var_MasterId(0_UINT),
@@ -64,7 +63,7 @@ namespace forte::eclipse4diac::io::wago {
   }
 
   void FORTE_WagoBusAdapter::setInitialValues() {
-    forte::CAdapter::setInitialValues();
+    CAdapter::setInitialValues();
     var_QO = 0_BOOL;
     var_QI = 0_BOOL;
     var_MasterId = 0_UINT;

@@ -13,8 +13,8 @@
 #include "WagoMaster_fbt.h"
 #include "../WagoDeviceController.h"
 
-using namespace std::literals;
 using namespace forte::literals;
+using namespace forte::io;
 
 namespace forte::eclipse4diac::io::wago {
   namespace {
@@ -41,18 +41,15 @@ namespace forte::eclipse4diac::io::wago {
   DEFINE_FIRMWARE_FB(FORTE_WagoMaster, "eclipse4diac::io::wago::WagoMaster"_STRID)
 
   FORTE_WagoMaster::FORTE_WagoMaster(const StringId paInstanceNameId, CFBContainer &paContainer) :
-      IOConfigFBMultiMaster(paContainer, cFBInterfaceSpec, paInstanceNameId),
-      var_QI(0_BOOL),
+      ::forte::io::IOConfigFBMultiMaster(paContainer, cFBInterfaceSpec, paInstanceNameId),
       var_UpdateInterval(25_UINT),
-      var_QO(0_BOOL),
-      var_STATUS(u""_WSTRING),
-      var_BusAdapterOut("BusAdapterOut"_STRID, *this, 0),
       conn_INITO(*this, 0),
       conn_IND(*this, 1),
       conn_QI(nullptr),
       conn_UpdateInterval(nullptr),
       conn_QO(*this, 0, var_QO),
-      conn_STATUS(*this, 1, var_STATUS) {
+      conn_STATUS(*this, 1, var_STATUS),
+      var_BusAdapterOut("BusAdapterOut"_STRID, *this, 0) {
   };
 
   void FORTE_WagoMaster::setInitialValues() {
@@ -69,8 +66,7 @@ namespace forte::eclipse4diac::io::wago {
         readData(1, var_UpdateInterval, conn_UpdateInterval);
         break;
       }
-      default:
-        break;
+      default: break;
     }
   }
 

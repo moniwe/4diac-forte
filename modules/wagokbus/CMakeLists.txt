@@ -37,8 +37,6 @@ add_library(forte-wagoKbus
             types/WagoMaster_fbt.cpp
             types/WagoBusAdapter_adp.h
             types/WagoBusAdapter_adp.cpp
-            types/WagoRegCom_adp.h
-            types/WagoRegCom_adp.cpp
             types/WagoSlaveBase.h
             types/WagoSlaveBase.cpp
             types/Wago1506_fbt.h

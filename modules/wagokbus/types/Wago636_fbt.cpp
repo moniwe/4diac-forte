@@ -24,8 +24,9 @@ namespace forte::eclipse4diac::io::wago {
     const auto cEventOutputNames = std::array{"MAPO"_STRID, "IND"_STRID};
     const auto cDataInputNames = std::array{"QI"_STRID, "Busy"_STRID, "LimitSwitchN"_STRID, "LimitSwitchP"_STRID, "PresetInput"_STRID, "OptimizeOnZInput"_STRID, "OnTarget"_STRID, "ReferenceOk"_STRID, "CurrentPosition"_STRID, "TargetPosition"_STRID, "MotorN"_STRID, "MotorP"_STRID, "Positioning"_STRID, "OptimizeOn"_STRID, "Preset"_STRID, "PresetInputEnable"_STRID, "QuitErrors"_STRID};
     const auto cDataOutputNames = std::array{"QO"_STRID, "STATUS"_STRID};
-    const auto cSocketNameIds = std::array{"RegCom"_STRID, "BusAdapterIn"_STRID};
+    const auto cSocketNameIds = std::array{"BusAdapterIn"_STRID};
     const auto cPlugNameIds = std::array{"BusAdapterOut"_STRID};
+
     const SFBInterfaceSpec cFBInterfaceSpec = {
         .mEINames = cEventInputNames,
         .mEITypeNames = {},
@@ -62,7 +63,6 @@ namespace forte::eclipse4diac::io::wago {
       var_QuitErrors(""_STRING),
       var_QO(0_BOOL),
       var_STATUS(u""_WSTRING),
-      var_RegCom("RegCom"_STRID, *this, 0),
       conn_MAPO(*this, 0),
       conn_IND(*this, 1),
       conn_QI(nullptr),
@@ -185,8 +185,7 @@ namespace forte::eclipse4diac::io::wago {
 
   forte::ISocketPin *FORTE_Wago636::getSocketPinUnchecked(const size_t paIndex) {
     switch(paIndex) {
-      case 0: return &var_RegCom;
-      case 1: return &var_BusAdapterIn;
+      case 0: return &var_BusAdapterIn;
     }
     return nullptr;
   }

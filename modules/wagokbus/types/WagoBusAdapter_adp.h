@@ -17,21 +17,13 @@
 #include "forte/datatypes/forte_uint.h"
 
 namespace forte::eclipse4diac::io::wago {
-  class FORTE_WagoBusAdapter : public forte::CAdapter {
+  class FORTE_WagoBusAdapter : public ::forte::io::IOConfigFBMultiAdapter {
       DECLARE_ADAPTER_TYPE(FORTE_WagoBusAdapter)
 
-    private:
+      protected:
+        void setInitialValues() override;
+
       public:
-        static const TEventID scmEventINITID = 0;
-
-      private:
-      public:
-        static const TEventID scmEventINITOID = 0;
-
-      private:
-
-      void setInitialValues() override;
-    public:
       CIEC_BOOL var_QO;
 
       CIEC_BOOL var_QI;
@@ -44,6 +36,10 @@ namespace forte::eclipse4diac::io::wago {
 
       TEventID evt_INIT() {
         return getParentAdapterListEventID() + scmEventINITID;
+      }
+
+      CIEC_ANY *getDeviceConfigPin(int) override {
+        return nullptr;
       }
 
       ~FORTE_WagoBusAdapter() override = default;

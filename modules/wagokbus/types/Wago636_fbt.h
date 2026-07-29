@@ -13,7 +13,6 @@
 #pragma once
 
 #include "WagoSlaveBase.h"
-#include "WagoRegCom_adp.h"
 
 namespace forte::eclipse4diac::io::wago {
 
@@ -59,8 +58,6 @@ namespace forte::eclipse4diac::io::wago {
 
       CIEC_BOOL var_QO;
       CIEC_WSTRING var_STATUS;
-
-      forte::CSocketPin<forte::eclipse4diac::io::wago::FORTE_WagoRegCom_Socket> var_RegCom;
 
       CEventConnection conn_MAPO;
       CEventConnection conn_IND;

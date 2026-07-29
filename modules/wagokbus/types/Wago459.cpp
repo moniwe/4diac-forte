@@ -21,9 +21,6 @@ namespace {
   const auto cEventInputTypeIds = std::array{"Event"_STRID};
   const auto cEventOutputNames = std::array{"MAPO"_STRID, "IND"_STRID};
   const auto cEventOutputTypeIds = std::array{"Event"_STRID, "Event"_STRID};
-  const auto cSocketNameIds = std::array{"BusAdapterIn"_STRID};
-  const auto cPlugNameIds = std::array{"BusAdapterOut"_STRID};
-
   const SFBInterfaceSpec cFBInterfaceSpec = {
       .mEINames = cEventInputNames,
       .mEITypeNames = cEventInputTypeIds,
@@ -32,8 +29,8 @@ namespace {
       .mDINames = cDataInputNames,
       .mDONames = cDataOutputNames,
       .mDIONames = {},
-      .mSocketNames = cSocketNameIds,
-      .mPlugNames = cPlugNameIds,
+      .mSocketNames = WagoSlaveBase::scmSocketNames,
+      .mPlugNames = WagoSlaveBase::scmPlugNames,
   };
 } // namespace
 

@@ -20,22 +20,24 @@
     initHandlesBase(noOfBoolInputs, noOfBoolOutputs, noOfAnalogInputs, noOfAnalogOutputs);                             \
   };
 
+using namespace forte::literals;
+
 namespace forte::eclipse4diac::io::wago {
 
 	class WagoSlaveBase : public forte::io::IOConfigFBMultiSlave {
 
 	  public:
-	    WagoSlaveBase(int paType,
-	                  CFBContainer &paContainer,
-	                  const SFBInterfaceSpec &paInterfaceSpec,
-	                  const forte::StringId paInstanceNameId);
-	    ~WagoSlaveBase() override = default;
-
-	    forte::CSocketPin<forte::eclipse4diac::io::wago::FORTE_WagoBusAdapter_Socket> var_BusAdapterIn;
-	    forte::CPlugPin<forte::eclipse4diac::io::wago::FORTE_WagoBusAdapter_Plug> var_BusAdapterOut;
+	    forte::CPlugPin<FORTE_WagoBusAdapter_Plug> var_BusAdapterOut;
+	    forte::CSocketPin<FORTE_WagoBusAdapter_Socket> var_BusAdapterIn;
 
 	  protected:
-	    void initHandlesBase(size_t paNumberOfBoolInputs,
+	    WagoSlaveBase(int paType,
+                      CFBContainer &paContainer,
+                      const SFBInterfaceSpec &paInterfaceSpec,
+                      const forte::StringId paInstanceNameId);
+        ~WagoSlaveBase() override = default;
+
+        void initHandlesBase(size_t paNumberOfBoolInputs,
 	                         size_t paNumberOfBoolOutputs,
 	                         size_t paNumberOfAnalogInputs,
 	                         size_t paNumberOfAnalogOutputs);
@@ -44,9 +46,6 @@ namespace forte::eclipse4diac::io::wago {
 	                        int paIOIndex,
 	                        CIEC_ANY::EDataTypeID paType,
 	                        forte::io::IOMapper::Direction paDirection);
-
-	    forte::IPlugPin *getPlugPinUnchecked(size_t) override;
-	    forte::ISocketPin *getSocketPinUnchecked(size_t) override;
 
 	  private:
 	    static const TForteUInt8 scmSlaveConfigurationIO[];

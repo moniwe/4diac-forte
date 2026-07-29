@@ -27,8 +27,7 @@ namespace forte::eclipse4diac::io::wago {
       IOConfigFBMultiSlave(
           scmSlaveConfigurationIO, scmSlaveConfigurationIONum, paType, paContainer, paInterfaceSpec, paInstanceNameId),
 		  var_BusAdapterOut("BusAdapterOut"_STRID, *this, 0),
-		  var_BusAdapterIn("BusAdapterIn"_STRID, *this, 0) {
-  }
+		  var_BusAdapterIn("BusAdapterIn"_STRID, *this, 0) {};
 
   void WagoSlaveBase::initWagoHandle(int paDIIndex,
                                      int paIOIndex,
@@ -68,11 +67,4 @@ namespace forte::eclipse4diac::io::wago {
     }
   }
 
-  forte::IPlugPin *WagoSlaveBase::getPlugPinUnchecked(size_t paIndex) {
-    return (paIndex == 0) ? &var_BusAdapterOut : nullptr;
-  }
-
-  forte::ISocketPin *WagoSlaveBase::getSocketPinUnchecked(size_t paIndex) {
-    return (paIndex == 0) ? &var_BusAdapterIn : nullptr;
-  }
 }
